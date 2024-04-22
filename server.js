@@ -7,7 +7,7 @@ const cors = require("cors");
 
 mongoose
   .connect(
-    `mongodb+srv://db191996:mitsubishi@cluster0.nwcuh.mongodb.net/blog?retryWrites=true&w=majority`,
+    `mongodb+srv://db191996:Zynq40F791OTBH13@cluster0.nwcuh.mongodb.net/blog?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

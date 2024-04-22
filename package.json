@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,10 +18,13 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "jsdom": "^17.0.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-anchor": "^8.6.6",
     "marked": "^4.0.12",
     "method-override": "^3.0.0",
     "mongoose": "^6.0.8",
     "slugify": "^1.6.0",
+    "unified": "^10.1.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

@@ -1,9 +1,24 @@
 const mongoose = require("mongoose");
-const { marked } = require("marked");
+// const anchor = require('markdown-it-anchor');
+// const { marked } = require("marked");
 const slugify = require("slugify");
 const createDomPurifier = require("dompurify");
 const { JSDOM } = require("jsdom");
 const dompurify = createDomPurifier(new JSDOM().window);
+const markdownIt = require('markdown-it')();
+const anchor = require('markdown-it-anchor');
+
+// Function to add ids to headings in markdown
+const addIdsToHeadings = (markdown) => {
+    markdownIt.use(anchor, {
+         level: [2,3,4],
+        permalink: false,
+        slugify: string => string.toLowerCase()
+        // permalinkSymbol: '#'
+        });
+    return markdownIt.render(markdown);
+}
+
 
 const articleSchema = new mongoose.Schema(
   {
@@ -37,12 +52,12 @@ const articleSchema = new mongoose.Schema(
       trim: true,
     },
     related1:{
-      required:true,
+     // required:true,
       type:String,
       trim:true,
     },
     related2:{
-      required:true,
+    //  required:true,
       type:String,
       trim:true,
     },
@@ -137,19 +152,19 @@ articleSchema.pre("validate", function (next) {
     this.slug = slugify(this.title, { lower: true, strict: true });
   }
   if (this.markdown) {
-    this.sanitizedHTML = dompurify.sanitize(marked(this.markdown));
+      this.sanitizedHTML = dompurify.sanitize(addIdsToHeadings(this.markdown));
   }
   if (this.markdown1) {
-    this.sanitizedHTML1 = dompurify.sanitize(marked(this.markdown1));
+    this.sanitizedHTML1 = dompurify.sanitize(addIdsToHeadings(this.markdown1));
   }
   if (this.markdown2) {
-    this.sanitizedHTML2 = dompurify.sanitize(marked(this.markdown2));
+    this.sanitizedHTML2 = dompurify.sanitize(addIdsToHeadings(this.markdown2));
   }
   if (this.markdown3) {
-    this.sanitizedHTML3 = dompurify.sanitize(marked(this.markdown3));
+    this.sanitizedHTML3 = dompurify.sanitize(addIdsToHeadings(this.markdown3));
   }
   if (this.markdown4) {
-    this.sanitizedHTML4 = dompurify.sanitize(marked(this.markdown4));
+    this.sanitizedHTML4 = dompurify.sanitize(addIdsToHeadings(this.markdown4));
   }
   if (this.sanitizedHTML) {
     this.articlePreviewMarkdown = fn(100, this.sanitizedHTML);
